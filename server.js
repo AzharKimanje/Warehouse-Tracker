@@ -37,9 +37,9 @@ const Item = mongoose.model('Item', new mongoose.Schema({
 }));
 
 // Routes
-// Home Route (this will redirect after login success)
+// Home Route
 app.get('/', (req, res) => {
-    res.redirect('/items/dashboard');
+    res.redirect('/auth/login');
 });
 
 // Add Item Route
@@ -79,26 +79,14 @@ app.post('/auth/login', (req, res) => {
 
     // Simple login check (replace this with actual authentication logic)
     if (username === 'admin' && password === 'password') {
-        // Redirect to a dashboard or homepage after successful login
-        res.redirect('/items/dashboard');
+        res.send('Login successful');
     } else {
         res.send('Invalid username or password');
     }
-});
-
-// Dashboard Route (after login)
-app.get('/items/dashboard', (req, res) => {
-    // Example: render the dashboard with a list of items
-    Item.find({}, (err, items) => {
-        if (err) {
-            res.status(500).send('Error fetching items');
-        } else {
-            res.render('dashboard', { items });  // Render the dashboard with the list of items
-        }
-    });
 });
 
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
+
